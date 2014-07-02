@@ -1,30 +1,30 @@
 #include <unistd.h>
 #include <errno.h>
-#include "socketio.h"
+#include "socketconnection.h"
 #include "session.h"
 
-socket_io::socket_io()
+socket_connection::socket_connection()
 	: _session(new session)
 {
 	_session->set_socket(this);
 }
 
-socket_io::~socket_io()
+socket_connection::~socket_connection()
 {
 	delete _session;
 }
 
-int socket_io::poll_in()
+int socket_connection::poll_in()
 {
 	return _session->poll_in();
 }
 
-int socket_io::poll_out()
+int socket_connection::poll_out()
 {
 	return _session->poll_out();
 }
 
-int socket_io::poll_close()
+int socket_connection::poll_close()
 {
 	if (_close)
 		_session->del_from_manager();
@@ -32,7 +32,7 @@ int socket_io::poll_close()
 	return 0;
 }
 
-int socket_io::read(void* buf, unsigned int len)
+int socket_connection::read(void* buf, unsigned int len)
 {
 	while (true)
 	{
@@ -43,7 +43,7 @@ int socket_io::read(void* buf, unsigned int len)
 	}
 }
 
-int socket_io::write(const void* buf, unsigned int len)
+int socket_connection::write(const void* buf, unsigned int len)
 {
 	while (true)
 	{

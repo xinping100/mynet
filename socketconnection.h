@@ -4,11 +4,11 @@
 
 class session;
 
-class socket_io : public socket_base
+class socket_connection : public socket_base
 {
 public:
-	socket_io();
-	~socket_io();
+	socket_connection();
+	~socket_connection();
 
 	virtual int get_type() const { return socket_type_io; }
 
