@@ -2,15 +2,12 @@
 
 class data_buffer
 {
-	typedef unsigned char byte_t;
 public:
 	data_buffer(unsigned int size);
 	data_buffer(unsigned int size, unsigned int size_max);
 	data_buffer(const data_buffer&);
 	data_buffer& operator= (const data_buffer& rhs);
 	~data_buffer();
-
-	void clear() { _in = _out = 0; }
 
 	unsigned int get_out() const { return _out; }
 	void set_out(unsigned int out) { _out = out; }
@@ -25,7 +22,7 @@ public:
 	void on_put(unsigned int n) { _in += n; }
 	void on_get(unsigned int n) { _out += n; }
 
-	bool full() const { return length() == _size_max; }
+	bool full() const { return length() == _size; }
 	bool empty() const { return length() == 0; }
 
 	void* get_free_buf(unsigned int& len);
@@ -33,7 +30,7 @@ public:
 private:
 	bool reserve(unsigned int size);
 
-	byte_t *_buf;			//buf ptr
+	unsigned char *_buf;	//buf ptr
 	unsigned int _size;		//buf size
 	unsigned int _size_max;
 	unsigned int _in, _out; //virtual index of _buf
